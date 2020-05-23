@@ -37,3 +37,11 @@ tail -F /usr/local/hadoop/logs/hadoop-student-namenode-student-VirtualBox.log
 
 When you see output from the above log, you should verify that you see the same text 
 from one of the file under Hadoop stored under /tmp/system.log directory.
+
+### Capturing ActiveMQ logs into HDFS
+
+```bash
+flume-ng agent --conf-file activemq-memory-hdfs.conf --name activemq_agent --conf $FLUME_HOME/conf -Dflume.root.logger=INFO,console
+
+hdfs dfs -ls /tmp/activemq.log | awk '{print $8}' | while read f; do hdfs dfs -cat $f | grep -i hello && echo $f; done
+```
