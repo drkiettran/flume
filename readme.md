@@ -45,3 +45,9 @@ flume-ng agent --conf-file activemq-memory-hdfs.conf --name activemq_agent --con
 
 hdfs dfs -ls /tmp/activemq.log | awk '{print $8}' | while read f; do hdfs dfs -cat $f | grep -i hello && echo $f; done
 ```
+
+### Capturing ActiveMQ logs and forward to the custom sink
+
+```bash
+flume-ng agent --classpath ../custom_sink/target/custom_sink-jar-with-dependencies.jar --conf-file activemq-memory-custom-sink.conf --name activemq_agent --conf $FLUME_HOME/conf -Dflume.root.logger=DEBUG,console
+```
